@@ -242,11 +242,11 @@
 
       </div>
       <div class="col-lg-6 col-md-6 col-xs-10 wow fadeInUp" data-wow-delay="0.6s">
-<form action="#" role="form" method="post">
-  <p><input type="text" name="name" id="name" class="form-control" placeholder="Enter your name"></p>
-  <p><input type="email" name="email" id="email" class="form-control" placeholder="Enter your email"></p>
-  <p><textarea name="message" id="message" rows="5" class="form-control" placeholder="Enter message"></textarea></p>
-  <p><input type="submit" id="send" class="form-control" value="SEND ME"></p>
+<form action="https://formspree.io/f/your-form-id" method="POST">
+  <p><input type="text" name="name" id="name" class="form-control" placeholder="Enter your name" required></p>
+  <p><input type="email" name="email" id="email" class="form-control" placeholder="Enter your email" required></p>
+  <p><textarea name="message" id="message" rows="5" class="form-control" placeholder="Enter message" required></textarea></p>
+  <p><input type="submit" class="form-control" value="SEND MESSAGE"></p>
 </form>
       </div>
       <div class="col-md-1 col-sm-1">
@@ -293,6 +293,30 @@
 	<script src="js/jquery.simple-text-rotator.js"></script>
 	<!-- custom -->
 	<script src="js/custom.js"></script>
+	<script>
+  const form = document.querySelector("form");
+  const status = document.querySelector("#form-status");
+
+  form.addEventListener("submit", async function (e) {
+    e.preventDefault();
+    const data = new FormData(form);
+    const action = form.action;
+    const response = await fetch(action, {
+      method: "POST",
+      body: data,
+      headers: {
+        Accept: "application/json"
+      }
+    });
+    if (response.ok) {
+      status.textContent = "Thanks! Your message has been sent.";
+      form.reset();
+    } else {
+      status.textContent = "Oops! Something went wrong.";
+    }
+  });
+</script>
+
 
 </body>
 
